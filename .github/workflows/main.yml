@@ -48,7 +48,7 @@ jobs:
         run: sudo apt-get -y install sshpass
 
       - name: Setup SSH connection
-        run: sshpass -f ${{ secrets.SSH_PASSPHRASE }} -P "Enter passphrase for key" ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_KEY }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}
+        run: sshpass -p ${{ secrets.SSH_PASSPHRASE }} -P "Enter passphrase for key" ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_KEY }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}
 
       - name: Login to the GitHub Packages Docker Registry
         run: ssh ${{secrets.SSH_USER}}@${{secrets.SSH_HOST}} "docker login ${{env.REGISTRY}} -u ${{github.actor}} -p ${{secrets.GITHUB_TOKEN}}"
