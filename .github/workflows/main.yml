@@ -39,7 +39,7 @@ jobs:
 
   # ２番目のジョブ名
   deploy:
-    # 1番目のジョブに依存することを指定する。
+    # 1番目のジョブに依存することを指定する
     needs: [push_to_registry]
     name: Deploy to Conoha
     runs-on: ubuntu-latest
