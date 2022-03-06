@@ -1,20 +1,18 @@
 name: Build, Push and Deploy Node.js app
 
-# アクションを実行するタイミングを制御します。
 on:
-  # プッシュイベントが発生したときにワークフローを起動するが、その対象は mainブランチのみとする
   push:
     branches: [main]
 
-  # [Actions] タブから手動でワークフローを実行することができます。
+  # [Actions] タブから手動でワークフローを実行することができる
   workflow_dispatch:
 
 env:
-  # docker-imageをGitHubのパッケージにプッシュ
+  # DockerイメージをGitHubのパッケージにプッシュ
   REGISTRY: docker.pkg.github.com
-  # イメージ名で、これをpushしたりpullしたりする
-  REPO: tfarras/nodejs-deploy/nodejs-image
-  # コンテナの停止または起動に使用されるコンテナ名
+  # イメージ名（pushしたりpullしたりする）
+  REPO: neruko-s/nodejs-deploy
+  # コンテナ名（コンテナの停止または起動に使用）
   CONTAINER: nodejs-image
 
 jobs:
@@ -34,7 +32,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: ${{ env.REGISTRY }}
           repository: ${{ env.REPO }}
-          # ビルドした画像にgitリファレンスのタグを自動的に付けます。(ドキュメントより)
+          # ビルドしたイメージにgitリファレンスのタグを自動的に付ける(ドキュメントより)
           tag_with_ref: true
 
   # ２番目のジョブ名
