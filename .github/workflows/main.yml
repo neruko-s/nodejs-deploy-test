@@ -11,7 +11,7 @@ env:
   # DockerイメージをGitHubのパッケージにプッシュ
   REGISTRY: docker.pkg.github.com
   # イメージ名（pushしたりpullしたりする）
-  REPO: neruko-s/nodejs-deploy
+  REPO: neruko-s/nodejs-deploy/nodejs-image
   # コンテナ名（コンテナの停止または起動に使用）
   CONTAINER: nodejs-image
 
