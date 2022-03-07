@@ -37,7 +37,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: user/app:latest
+          tags: ${{ env.REGISTRY }}/${{ env.REPO }}:latest
 
       # - name: Push to GitHub Packages
       #   uses: docker/build-push-action@v1
