@@ -2,7 +2,8 @@ name: Build, Push and Deploy Node.js app
 
 on:
   push:
-    branches: [main]
+    branches:
+      - 'main'
 
   # [Actions] タブから手動でワークフローを実行することができる
   workflow_dispatch:
@@ -25,16 +26,29 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v2
 
-      - name: Push to GitHub Packages
-        uses: docker/build-push-action@v1
-        # 使用するアクションの設定を受け取るブロック
+      - name: Set up Docker Buildx
+        uses: docker/login-action@v1
         with:
+          registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-          registry: ${{ env.REGISTRY }}
-          repository: ${{ env.REPO }}
-          # ビルドしたイメージにgitリファレンスのタグを自動的に付ける(ドキュメントより)
-          tag_with_ref: true
+
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: user/app:latest
+
+      # - name: Push to GitHub Packages
+      #   uses: docker/build-push-action@v1
+      #   # 使用するアクションの設定を受け取るブロック
+      #   with:
+      #     username: ${{ github.actor }}
+      #     password: ${{ secrets.GITHUB_TOKEN }}
+      #     registry: ${{ env.REGISTRY }}
+      #     repository: ${{ env.REPO }}
+      #     # ビルドしたイメージにgitリファレンスのタグを自動的に付ける(ドキュメントより)
+      #     tag_with_ref: true
 
   # ２番目のジョブ名
   deploy:
